@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MiniBank | Secure Banking</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ============================= -->
+<!-- LOGIN SCREEN -->
+<!-- ============================= -->
+
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-box">
+
+        <div class="login-icon">🏦</div>
+
+        <h1>MiniBank</h1>
+
+        <p>Secure Banking Login</p>
+
+        <input
+            type="text"
+            id="loginAccountNumber"
+            placeholder="Account Number"
+            maxlength="20"
+        >
+
+        <input
+            type="password"
+            id="loginPin"
+            placeholder="4-digit PIN"
+            maxlength="4"
+            inputmode="numeric"
+        >
+
+        <button onclick="login()">
+            Login
+        </button>
+
+        <p id="loginMessage"></p>
+
+    </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- NAVBAR -->
+<!-- ============================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        🏦 <span>MiniBank</span>
+    </div>
+
+    <div class="nav-links">
+
+        <span onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            Dashboard
+        </span>
+
+        <span onclick="showStatement()">
+            Transactions
+        </span>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ============================= -->
+<!-- MAIN DASHBOARD -->
+<!-- ============================= -->
+
+<main class="container">
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <div>
+
+            <p class="small-heading">
+                PERSONAL BANKING
+            </p>
+
+            <h1>
+                Welcome, <span id="customerName">Customer</span> 👋
+            </h1>
+
+            <p>
+                Manage your money easily, quickly and securely.
+            </p>
+
+        </div>
+
+        <div class="secure-badge">
+            🔐 Secure Account
+        </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- BALANCE CARD -->
+    <!-- ============================= -->
+
+    <section class="balance-card">
+
+        <div class="balance-main">
+
+            <p>Available Balance</p>
+
+            <h2 id="balance">
+                ₹0.00
+            </h2>
+
+            <span class="balance-label">
+                Current account balance
+            </span>
+
+        </div>
+
+
+        <div class="account-info">
+
+            <p>ACCOUNT NUMBER</p>
+
+            <h3 id="accountNumber">
+                Loading...
+            </h3>
+
+            <span>
+                🏦 MiniBank Account
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- QUICK OPERATIONS -->
+    <!-- ============================= -->
+
+    <section class="section-heading">
+
+        <div>
+
+            <p class="small-heading">
+                BANKING SERVICES
+            </p>
+
+            <h2>
+                Quick Operations
+            </h2>
+
+        </div>
+
+    </section>
+
+
+    <section class="operations">
+
+
+        <!-- DEPOSIT -->
+
+        <div class="operation-card">
+
+            <div class="icon deposit-icon">
+                💰
+            </div>
+
+            <h3>
+                Deposit
+            </h3>
+
+            <p>
+                Add money to your bank account.
+            </p>
+
+            <button onclick="showDeposit()">
+                Deposit Money →
+            </button>
+
+        </div>
+
+
+        <!-- WITHDRAW -->
+
+        <div class="operation-card">
+
+            <div class="icon withdraw-icon">
+                💸
+            </div>
+
+            <h3>
+                Withdraw
+            </h3>
+
+            <p>
+                Withdraw money from your account.
+            </p>
+
+            <button onclick="showWithdraw()">
+                Withdraw Money →
+            </button>
+
+        </div>
+
+
+        <!-- TRANSFER -->
+
+        <div class="operation-card">
+
+            <div class="icon transfer-icon">
+                🔄
+            </div>
+
+            <h3>
+                Transfer
+            </h3>
+
+            <p>
+                Send money to another account.
+            </p>
+
+            <button onclick="showTransfer()">
+                Transfer Money →
+            </button>
+
+        </div>
+
+
+        <!-- STATEMENT -->
+
+        <div class="operation-card">
+
+            <div class="icon statement-icon">
+                📜
+            </div>
+
+            <h3>
+                Statement
+            </h3>
+
+            <p>
+                View your complete transaction history.
+            </p>
+
+            <button onclick="showStatement()">
+                View Statement →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- ACTION AREA -->
+    <!-- ============================= -->
+
+    <section id="actionArea" class="action-area">
+
+        <h2>
+            Choose an operation
+        </h2>
+
+        <p>
+            Select Deposit, Withdraw, Transfer or Statement above.
+        </p>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- RECENT TRANSACTIONS -->
+    <!-- ============================= -->
+
+    <section class="transactions">
+
+        <div class="transaction-header">
+
+            <div>
+
+                <p class="small-heading">
+                    ACCOUNT ACTIVITY
+                </p>
+
+                <h2>
+                    Recent Transactions
+                </h2>
+
+            </div>
+
+            <button
+                class="view-all-btn"
+                onclick="showStatement()"
+            >
+                View All →
+            </button>
+
+        </div>
+
+
+        <div id="transactionList">
+
+            <p>
+                No transactions loaded.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ============================= -->
+<!-- PIN MODAL -->
+<!-- ============================= -->
+
+<div id="pinModal" class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close-btn"
+            onclick="closePinModal()"
+        >
+            ×
+        </button>
+
+        <div class="modal-icon">
+            🔐
+        </div>
+
+        <h2>
+            Enter Your PIN
+        </h2>
+
+        <p id="pinMessage">
+            Enter your 4-digit PIN to continue.
+        </p>
+
+        <input
+            type="password"
+            id="pinInput"
+            maxlength="4"
+            inputmode="numeric"
+            placeholder="••••"
+        >
+
+        <button
+            class="modal-submit"
+            onclick="verifyPinAndContinue()"
+        >
+            Verify PIN
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- OPERATION MODAL -->
+<!-- ============================= -->
+
+<div id="operationModal" class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close-btn"
+            onclick="closeOperationModal()"
+        >
+            ×
+        </button>
+
+        <div id="operationContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- FOOTER -->
+<!-- ============================= -->
+
+<footer>
+
+    <div>
+        🏦 <strong>MiniBank</strong>
+    </div>
+
+    <p>
+        © 2026 MiniBank | Secure Mini Banking Application
+    </p>
+
+    <span>
+        🔒 Your transactions are protected
+    </span>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
